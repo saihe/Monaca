@@ -1,0 +1,18 @@
+@-webkit-keyframes runanime{
+    from{ background-position: 0px; }
+    to  { background-position: -3871px }
+}
+
+.run{
+    width: 322px;
+    height: 351px;
+    
+    background-image: url("../img/run.png");
+    background-size: 4192px 351px;
+    
+    -webkit-animation: runanime 1s steps(12) infinite;
+}
+
+.stop{
+    -webkit-animation: none;
+}
