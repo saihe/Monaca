@@ -1,0 +1,19 @@
+#blackhole{
+    transition: all 1s linear;
+    opacity: 0;
+}
+
+#blackhole.active{
+    opacity: 1;
+}
+
+#eath{
+    transition: all 3s ease-in-out;
+    transition-delay: 2s;
+    -webkit-transform:translate(206px , 431px);
+    opacity: 1;
+}
+#earth.active{
+    -webkit-transform:translate(47px , 74px);
+    opacity: 0;
+}
