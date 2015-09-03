@@ -1,0 +1,7 @@
+img{
+    margin: -75px 0 0 -75px;
+    position: absolute;
+}
+.dragging{
+    opacity: 0.6;
+}

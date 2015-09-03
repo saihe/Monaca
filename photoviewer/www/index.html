@@ -1,0 +1,105 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <script src="components/loader.js"></script>
+    <link rel="stylesheet" href="components/loader.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script>
+        ons.bootstrap();
+        
+        ons.ready(function(){
+            createImageView({id: 'pic-1' , x: 90 , y: 270 , zIndex: 1});    
+            createImageView({id: 'pic-2' , x: 160 , y: 290 , zIndex: 2});    
+            createImageView({id: 'pic-3' , x: 230 , y: 310 , zIndex: 3}); 
+            $(document).on('touchmove' , function(event){
+                event.preventDefault();
+            });
+            
+            var topmostZ = 3;
+            function createImageView(params){
+                var view = {
+                    $element:$('#' + params.id),
+                    x: params.x,
+                    y: params.y,
+                    zIndex: params.zIndex,
+                    rotation: 0,
+                    prevRotation: 0,
+                    scale: 1,
+                    prevScale: 1,
+                    
+                    init: function(){
+                        this.$element.on('drag' , this.onDrag.bind(this));
+                        this.$element.on('tap' , this.onTap.bind(this));
+                        this.$element.on('pinch' , this.onPinch.bind(this));
+                        this.$element.on('rotate' , this.onRotate.bind(this));
+                        this.$element.on('release' , this.onRelease.bind(this));
+                        this.update();
+                    },
+                    
+                    onDrag: function(event){
+                        this.$element.addClass('dragging');
+                        var gesture = event.originalEvent.gesture;
+                        this.x = gesture.center.pageX;
+                        this.y = gesture.center.pageY;
+                        this.update();
+                    },
+                    
+                    onPinch: function(event){
+                        var gesture = event.originalEvent.gesture;
+                        this.scale = Math.max(0.5, Math.min(this.prevScale * gesture.scale , 3));
+                        this.update();
+                    },
+                    
+                    onRotate: function(event){
+                        var gesture = event.originalEvent.gesture;
+                        this.rotation = this.prevRotation + gesture.rotation;
+                        this.update();
+                    },
+                    
+                    onTap: function(){
+                        topmostZ++;
+                        this.zIndex = topmostZ;
+                        this.update();
+                    },
+                    
+                    onRelease: function(){
+                        this.prevScale = this.scale;
+                        this.prevRotation = this.rotation;
+                        this.$element.removeClass('dragging');
+                    },
+                    
+                    update: function(){
+                        var transform = 'translate(' + this.x + 'px,' + this.y + 'px) rotate(' + this.rotation + 'deg) scale(' + this.scale + ')';
+                        this.$element.css('transform' , transform).css('z-index' , this.zIndex);
+                    }
+                };
+                view.init();
+            }
+        }); 
+        
+    </script>
+    <style>
+        body {
+            background-image: url(img/bg.png);
+            background-size: cover;
+        }
+        img {
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+            margin: -75px 0 0 -75px;
+            position: absolute;
+        }
+        .dragging {
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body>
+    <ons-gesture-detector>
+        <img src="img/pic_01.png" id="pic-1" , width="150" , height="150">
+        <img src="img/pic_02.png" id="pic-2" , width="150" , height="150">
+        <img src="img/pic_03.png" id="pic-3" , width="150" , height="150">
+    </ons-gesture-detector>
+</body>
+</html>
