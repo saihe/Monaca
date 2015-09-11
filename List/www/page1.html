@@ -1,0 +1,16 @@
+<ons-page ng-controller="mc">
+    <ons-toolbar>
+        <div class="center">Navigator</div>
+    </ons-toolbar>
+
+    <div style="text-align: center">
+        <ons-list>
+            <ons-list-item ng-repeat="data in dataList">{{data}}</ons-list-item>
+        <br>
+        </ons-list>
+    </div>
+    <ons-button ng-click="changeProp1()">プロパティを変更1</ons-button>
+    <ons-button ng-click="changeProp2()">プロパティを変更2</ons-button>
+
+
+</ons-page>
